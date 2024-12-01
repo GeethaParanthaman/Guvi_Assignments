@@ -22,9 +22,9 @@ public class Facebook {
 		driver.navigate().to("https://www.facebook.com");
 		driver.findElement(By.xpath("//div[@class='_6ltg']//a")).click();
 		wait(1000);
-		driver.findElement(By.xpath("//input[@name='firstname']")).sendKeys("Test");
-		driver.findElement(By.xpath("//input[@name='lastname']")).sendKeys("User");
-		driver.findElement(By.xpath("//input[@name='reg_email__']")).sendKeys("test@gmail.com");
+		driver.findElement(By.xpath("//input[@name='firstname']")).sendKeys("Geetha");
+		driver.findElement(By.xpath("//input[@name='lastname']")).sendKeys("Motonew");
+		driver.findElement(By.xpath("//input[@name='reg_email__']")).sendKeys("newtest@gmail.com");
 		driver.findElement(By.xpath("//input[@name='reg_passwd__']")).sendKeys("Test@123");
 		driver.findElement(By.xpath("//label[text()='Female']")).click();
 		

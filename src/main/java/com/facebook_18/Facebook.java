@@ -3,49 +3,60 @@ package com.facebook_18;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.interactions.Actions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Facebook {
+public class DragAndDrop {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
-		facebook();
+		dragAndDrop();
+		
 
 	}
-	public static void facebook() throws InterruptedException
+	public static void dragAndDrop() throws InterruptedException
 	{
-		WebDriverManager.chromedriver().setup();
-		ChromeDriver driver=new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.navigate().to("https://www.facebook.com");
-		driver.findElement(By.xpath("//div[@class='_6ltg']//a")).click();
-		wait(1000);
-		driver.findElement(By.xpath("//input[@name='firstname']")).sendKeys("Test");
-		driver.findElement(By.xpath("//input[@name='lastname']")).sendKeys("User");
-		driver.findElement(By.xpath("//input[@name='reg_email__']")).sendKeys("test@gmail.com");
-		driver.findElement(By.xpath("//input[@name='reg_passwd__']")).sendKeys("Test@123");
-		driver.findElement(By.xpath("//label[text()='Female']")).click();
-		
-		WebElement dayElement=driver.findElement(By.xpath("//select[@name='birthday_day']"));
-		Select select=new Select(dayElement);
-		wait(1000);
-		select.selectByIndex(11);
-		WebElement elementmonth= driver.findElement(By.xpath("//select[@name='birthday_month']"));
-		Select selectMonth=new Select(elementmonth);
-		wait(1000);
-		selectMonth.selectByVisibleText("May");
-		WebElement elementYear=driver.findElement(By.xpath("//select[@name='birthday_year']"));
-		Select selectYear=new Select(elementYear);
-		wait(1000);
-		selectYear.selectByValue("1985");
-		driver.findElement(By.xpath("//button[@type='submit' and text()='Sign Up']")).click();
-		wait(1000);
 	
+	WebDriverManager.chromedriver().setup();
+	ChromeDriver driver=new ChromeDriver();
+	driver.manage().window().maximize();
+	driver.navigate().to("https://jqueryui.com/droppable");
+	waitTime(3000);
+	WebElement iframe=driver.findElement(By.xpath("//iframe"));
+	driver.switchTo().frame(iframe);
+	//<iframe src="/resources/demos/droppable/default.html" ></iframe>
+	waitTime(1000);
+	WebElement draggableElement=driver.findElement(By.xpath("//div[@id='draggable']"));
+	WebElement droppableElement=driver.findElement(By.xpath("//div[@id='droppable']"));
+	Actions actionObject=new Actions(driver);
+	
+	actionObject.dragAndDrop(draggableElement, droppableElement).build().perform();
+	waitTime(2000);
+	String droppedText=droppableElement.getText();
+	System.out.println(droppedText);
+	if(droppedText=="Dropped!")
+	{
+		System.out.println("dropped successfully");
 	}
-public static void wait(int time) throws InterruptedException
-{
-	Thread.sleep(time);
+	String backgroundColor=droppableElement.getCssValue("background-color");
+	System.out.println("background color"+backgroundColor);
+	String hexColor = rgbaToHex(backgroundColor);
+    System.out.println("Hexadecimal Color: " + hexColor);
 }
+	public static void waitTime(int time) throws InterruptedException
+	{
+		Thread.sleep(time);
+	}
+	
+	public static String rgbaToHex(String rgba) {
+        // Extract RGB values from the CSS value
+        String[] values = rgba.replace("rgba(", "").replace("rgb(", "").replace(")", "").split(",");
+        int r = Integer.parseInt(values[0].trim());
+        int g = Integer.parseInt(values[1].trim());
+        int b = Integer.parseInt(values[2].trim());
+
+        // Convert RGB to Hex
+        return String.format("#%02x%02x%02x", r, g, b).toUpperCase();
+	}
 }

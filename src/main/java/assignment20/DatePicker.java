@@ -9,7 +9,7 @@ import com.github.dockerjava.api.model.Driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class WebComponent1 {
+public class DatePicker{
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
